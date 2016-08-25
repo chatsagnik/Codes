@@ -24,10 +24,8 @@ def subsetSum(arr,val):
             #Either take the value from above or include the present element to check if sum possible
             K[i][j] = max(K[i-1][j - arr[i]], K[i-1][j])
 
-    #printing the length of the longest common subsequence
-    print(str(row)+","+str(col))
-
-    if K[row-1][col] == 1:
+    #printing if the sum is possible
+    if K[row-1][col-1] == 1:
         print("Sum possible from given subset.")
 
     else:
@@ -36,8 +34,19 @@ def subsetSum(arr,val):
     for x in K:
         print(x)
 
-##    #print the elements included in the sum
-##    check(K,row,col)
+    #print the elements included in the sum
+    check(arr,K,row-1,col-1)
+
+def check(arr,K,row,col):
+##    debugging: check the cells: print(str(row)+","+str(col))
+    if col == 0:
+        return
+    if K[row][col] == K[row-1][col]:#value not from this row
+        check(arr,K,row-1,col)
+    else:#value came from this row
+        print(arr[row])
+        check(arr,K,row-1,col-arr[row])
+        
 
 #driver program
 arr = [2,3,7,8,10]
